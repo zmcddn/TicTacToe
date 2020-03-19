@@ -19,17 +19,21 @@ class TicTacToeGame(object):
 
         self.print_greatings()
 
-    def print_board(self, is_greating=False):
+    def print_board(self, is_greating=False, add_board_spacing=True):
+        if add_board_spacing:
+            spacing = " " * 2
+        else:
+            spacing = ""
+
         for i in range(1, 10, 3):
-            print(" " * 2, "+---+---+---+")
+            print(f"{spacing}+---+---+---+")
             if is_greating:
-                print(" " * 2, f"| {i} | {i+1} | {i+2} |")
+                print(f"{spacing}| {i} | {i+1} | {i+2} |")
             else:
                 print(
-                    " " * 2,
-                    f"| {self.board[i]} | {self.board[i+1]} | {self.board[i+2]} |",
+                    f"{spacing}| {self.board[i]} | {self.board[i+1]} | {self.board[i+2]} |"
                 )
-        print(" " * 2, "+---+---+---+\n")
+        print(f"{spacing}+---+---+---+\n")
 
     def print_greatings(self, board=None):
         print("Welcome to the Tic Tac Toe game, here is the board layout.\n")
