@@ -54,7 +54,6 @@ class TicTacToeGame(object):
 
     def is_board_full(self):
         """Return True if board is full otherwise False"""
-
         return self.steps == 9
 
     def ai_move(self):
@@ -88,15 +87,46 @@ class TicTacToeGame(object):
             print("Game over!")
             # If board is full then check winner
 
+    def is_game_finished():
+        """Game is finished whenever there is a winner or board is full"""
+
+        is_finished = True
+        winner = self.check_winner()
+
+        if winner == "AI":
+            print("Sorry you lost, keep trying!")
+        elif winner == "Player":
+            print("Congratulations! You win!")
+        else:
+            if self.is_board_full():
+                print("Its a TIE!")
+            else:
+                is_finished = False
+
+        return is_finished
+
+
     def check_winner(self):
         pass
 
+    def check_row_win(self):
+        pass
 
-if __name__ == "__main__":
+    def check_col_win(self):
+        pass
+
+    def check_diag_win(self):
+        pass
+
+
+def start_game():
     game = TicTacToeGame()
     for i in range(9):
         print("Your move:")
         position = input()
         game.place(int(position))
         game.ai_move()
-        # print(game.is_board_full())
+
+
+if __name__ == "__main__":
+    start_game()
