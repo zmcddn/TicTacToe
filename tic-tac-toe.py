@@ -4,15 +4,15 @@ from random import randint
 class TicTacToeGame(object):
     def __init__(self, *args, **kwargs):
         self.board = {
-            1: '-',
-            2: '-',
-            3: '-',
-            4: '-',
-            5: '-',
-            6: '-',
-            7: '-',
-            8: '-',
-            9: '-',
+            1: "-",
+            2: "-",
+            3: "-",
+            4: "-",
+            5: "-",
+            6: "-",
+            7: "-",
+            8: "-",
+            9: "-",
         }
 
         self.steps = 0
@@ -21,12 +21,15 @@ class TicTacToeGame(object):
 
     def print_board(self, is_greating=False):
         for i in range(1, 10, 3):
-            print(" "*2, "+---+---+---+")
+            print(" " * 2, "+---+---+---+")
             if is_greating:
-                print(" "*2, f"| {i} | {i+1} | {i+2} |")
+                print(" " * 2, f"| {i} | {i+1} | {i+2} |")
             else:
-                print(" "*2, f"| {self.board[i]} | {self.board[i+1]} | {self.board[i+2]} |")
-        print(" "*2, "+---+---+---+\n")
+                print(
+                    " " * 2,
+                    f"| {self.board[i]} | {self.board[i+1]} | {self.board[i+2]} |",
+                )
+        print(" " * 2, "+---+---+---+\n")
 
     def print_greatings(self, board=None):
         print("Welcome to the Tic Tac Toe game, here is the board layout.\n")
@@ -36,7 +39,7 @@ class TicTacToeGame(object):
         print("\nType in the location in the cell to place your token.")
         print("For example, input 1 to place in the top left corner.")
         print("\nNow lets get started, you go first, have fun!\n")
-        print("==="*20, "\n")
+        print("===" * 20, "\n")
 
         self.print_board()
 
@@ -82,12 +85,10 @@ class TicTacToeGame(object):
         self.steps += 1
         self.print_board()
 
-        # Check board to make sure its not full and game is still on
-        if self.is_board_full():
-            print("Game over!")
-            # If board is full then check winner
+        # Check if game is finished at end of each step
+        return self.is_game_finished()
 
-    def is_game_finished():
+    def is_game_finished(self):
         """Game is finished whenever there is a winner or board is full"""
 
         is_finished = True
@@ -105,18 +106,70 @@ class TicTacToeGame(object):
 
         return is_finished
 
-
     def check_winner(self):
-        pass
+        if (
+            self.check_row_win("X")
+            or self.check_col_win("X")
+            or self.check_diag_win("X")
+        ):
+            return "Player"
+        elif (
+            self.check_row_win("O")
+            or self.check_col_win("O")
+            or self.check_diag_win("O")
+        ):
+            return "AI"
+        else:
+            return None
 
-    def check_row_win(self):
-        pass
+    def check_row_win(self, target):
+        return (
+            (
+                self.board[1] == target
+                and self.board[2] == target
+                and self.board[3] == target
+            )
+            or (
+                self.board[4] == target
+                and self.board[5] == target
+                and self.board[6] == target
+            )
+            or (
+                self.board[7] == target
+                and self.board[8] == target
+                and self.board[9] == target
+            )
+        )
 
-    def check_col_win(self):
-        pass
+    def check_col_win(self, target):
+        return (
+            (
+                self.board[1] == target
+                and self.board[4] == target
+                and self.board[7] == target
+            )
+            or (
+                self.board[2] == target
+                and self.board[5] == target
+                and self.board[8] == target
+            )
+            or (
+                self.board[3] == target
+                and self.board[6] == target
+                and self.board[9] == target
+            )
+        )
 
-    def check_diag_win(self):
-        pass
+    def check_diag_win(self, target):
+        return (
+            self.board[1] == target
+            and self.board[5] == target
+            and self.board[9] == target
+        ) or (
+            self.board[3] == target
+            and self.board[5] == target
+            and self.board[7] == target
+        )
 
 
 def start_game():
