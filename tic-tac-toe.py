@@ -25,7 +25,7 @@ class TicTacToeGame(object):
         else:
             spacing = ""
 
-        for i in range(1, 10, 3):
+        for i in range(7, 0, -3):
             print(f"{spacing}+---+---+---+")
             if is_greating:
                 print(f"{spacing}| {i} | {i+1} | {i+2} |")
@@ -36,12 +36,14 @@ class TicTacToeGame(object):
         print(f"{spacing}+---+---+---+\n")
 
     def print_greatings(self, board=None):
-        print("Welcome to the Tic Tac Toe game, here is the board layout.\n")
+        print("Welcome to the Tic Tac Toe game, here is the board layout.")
+        print("  i.e. its the same as the numeric key pad layout.\n")
 
         self.print_board(is_greating=True)
 
         print("\nType in the location in the cell to place your token.")
-        print("For example, input 1 to place in the top left corner.")
+        print("For example, input 7 to place in the top left corner.")
+        print("You can use your numeric key pad to play!")
         print("\nNow lets get started, you go first, have fun!\n")
         print("===" * 20, "\n")
 
