@@ -36,12 +36,12 @@ class TicTacToeGame(object):
         print(f"{spacing}+---+---+---+\n")
 
     def print_greatings(self, board=None):
-        print("Welcome to the Tic Tac Toe game, here is the board layout.")
+        print("\nWelcome to the Tic Tac Toe game, here is the board layout.")
         print("  i.e. its the same as the numeric key pad layout.\n")
 
         self.print_board(is_greating=True)
 
-        print("\nType in the location in the cell to place your token.")
+        print("Type in the location in the cell to place your token.")
         print("For example, input 7 to place in the top left corner.")
         print("You can use your numeric key pad to play!")
         print("\nNow lets get started, you go first, have fun!\n")
