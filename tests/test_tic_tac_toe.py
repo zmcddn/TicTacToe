@@ -1,5 +1,5 @@
-from unittest.mock import patch
 import io
+from unittest.mock import patch
 
 import pytest
 
@@ -27,3 +27,11 @@ def test_place_valid():
     game = TicTacToeGame()
     game.place(3)
     assert game.board[3] == "X"
+
+
+def test_is_board_full():
+    game = TicTacToeGame()
+    assert game.is_board_full() == False
+
+    game.steps = 9
+    assert game.is_board_full() == True

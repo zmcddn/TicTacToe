@@ -72,7 +72,7 @@ class TicTacToeGame(object):
         """Return True if board is full otherwise False"""
         return self.steps == 9
 
-    def ai_move(self):
+    def random_ai_move(self):
         """AI makes a random legal move"""
 
         iteration = 0
@@ -93,6 +93,9 @@ class TicTacToeGame(object):
                     break
 
         self.board[position] = "O"
+
+    def ai_move(self):
+        self.random_ai_move()
 
         print("AI moves:")
         self.steps += 1
