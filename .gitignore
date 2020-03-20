@@ -1,7 +1,18 @@
+# Python binary
 *.pyc
 __pycache__
 
+# Python package builds
 *.egg-info
 build
 dist
 
+# environment
+.env
+
+# Python coverage
+/.coverage
+
+#IDE
+.vscode
+.vscode/

@@ -11,6 +11,8 @@ A single player command line tic tac toe game to play with AI and kill some time
 ## Dependencies
 
 - python >= 3.4
+- pytest
+- pytest-cov
 
 
 ## How to play
