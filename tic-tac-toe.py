@@ -48,16 +48,22 @@ class TicTacToeGame(object):
         self.print_board()
 
     def place(self, position):
+        has_valid_position = False
+
         if not 1 <= position <= 9:
-            print("Invalid position")
+            # This is handled for quitting the game
+            pass
         elif self.board[position] != "-":
-            print("Position already taken")
+            print("Position already taken, please try again:")
         else:
             self.board[position] = "X"
+            has_valid_position = True
 
-        self.steps += 1
+        if has_valid_position:
+            self.steps += 1
+            self.print_board()
 
-        self.print_board()
+        return has_valid_position
 
     def is_board_full(self):
         """Return True if board is full otherwise False"""
@@ -192,7 +198,10 @@ def start_game():
         print("Your move (press any key other than 1~9 to quit):")
         position = input()
         try:
-            game.place(int(position))
+            position_valid = game.place(int(position))
+            if not position_valid:
+                continue
+
             is_game_end = game.ai_move()
             if is_game_end:
                 print("Would you like to restart: [Y or N]:")
