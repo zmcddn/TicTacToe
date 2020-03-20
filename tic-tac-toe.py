@@ -175,14 +175,49 @@ class TicTacToeGame(object):
             and self.board[7] == target
         )
 
+    def reset(self):
+        for key in self.board.keys():
+            self.board[key] = "-"
+
+    def restart(self):
+        self.reset()
+        self.print_board()
+
 
 def start_game():
     game = TicTacToeGame()
-    for i in range(9):
-        print("Your move:")
+
+    step = 0
+    while True:
+        print("Your move (press any key other than 1~9 to quit):")
         position = input()
-        game.place(int(position))
-        game.ai_move()
+        try:
+            game.place(int(position))
+            is_game_end = game.ai_move()
+            if is_game_end:
+                print("Would you like to restart: [Y or N]:")
+                restart = check_restart()
+                if restart:
+                    print("\nHere we go! Game restarted!\n")
+                    game.restart()
+                    step = 0
+                else:
+                    raise ValueError()
+            step += 1
+        except ValueError:
+            print("\nThanks for playing, have a great day!\n")
+            break
+
+
+def check_restart():
+    while True:
+        user_input = input()
+        print(user_input.upper())
+        if user_input.upper() != "Y" and user_input.upper() != "N":
+            print("Invalid input, please input either Y or N")
+            continue
+        else:
+            return user_input.upper() == "Y"
 
 
 if __name__ == "__main__":
