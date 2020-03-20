@@ -188,6 +188,7 @@ class TicTacToeGame(object):
         )
 
     def reset(self):
+        self.steps = 0
         for key in self.board.keys():
             self.board[key] = "-"
 

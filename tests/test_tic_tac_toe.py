@@ -138,3 +138,25 @@ def test_player_win__board_full():
         game.place(6)
 
     assert stdout.getvalue().split("\n")[-2] == "Congratulations! You win!"
+
+
+def test_game_reset():
+    game = TicTacToeGame()
+
+    game.place(8)
+    game.reset()
+
+    assert game.steps == 0
+    for key in game.board.keys():
+        assert game.board[key] == "-"
+
+
+def test_game_restart():
+    game = TicTacToeGame()
+
+    game.place(8)
+    game.restart()
+
+    assert game.steps == 0
+    for key in game.board.keys():
+        assert game.board[key] == "-"
