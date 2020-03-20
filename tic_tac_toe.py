@@ -65,7 +65,8 @@ class TicTacToeGame(object):
             self.steps += 1
             self.print_board()
 
-        return has_valid_position
+        # Check if game is finished at end of each step
+        return has_valid_position, self.is_game_finished()
 
     def is_board_full(self):
         """Return True if board is full otherwise False"""
@@ -200,20 +201,16 @@ def start_game():
         print("Your move (press any key other than 1~9 to quit):")
         position = input()
         try:
-            position_valid = game.place(int(position))
+            position_valid, _is_game_end = game.place(int(position))
             if not position_valid:
                 continue
 
+            if _is_game_end:
+                handle_game_end(game)
+
             is_game_end = game.ai_move()
             if is_game_end:
-                print("Would you like to restart: [Y or N]:")
-                restart = check_restart()
-                if restart:
-                    print("\nHere we go! Game restarted!\n")
-                    game.restart()
-                    step = 0
-                else:
-                    raise ValueError()
+                handle_game_end(game)
             step += 1
         except ValueError:
             print("\nThanks for playing, have a great day!\n")
@@ -229,6 +226,17 @@ def check_restart():
             continue
         else:
             return user_input.upper() == "Y"
+
+
+def handle_game_end(game):
+    print("Would you like to restart: [Y or N]:")
+    restart = check_restart()
+    if restart:
+        print("\nHere we go! Game restarted!\n")
+        game.restart()
+        step = 0
+    else:
+        raise ValueError()
 
 
 if __name__ == "__main__":
