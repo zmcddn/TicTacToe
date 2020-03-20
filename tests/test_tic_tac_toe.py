@@ -4,7 +4,7 @@ from unittest.mock import patch
 import pytest
 
 import tic_tac_toe
-from tic_tac_toe import TicTacToeGame
+from tic_tac_toe import TicTacToeGame, handle_game_end
 
 
 def test_board_empty():
@@ -160,3 +160,87 @@ def test_game_restart():
     assert game.steps == 0
     for key in game.board.keys():
         assert game.board[key] == "-"
+
+
+def test_game_row_win():
+    game = TicTacToeGame()
+    game.place(7)
+    game.place(8)
+    game.place(9)
+
+    assert game.check_row_win("X") == True
+    assert game.check_winner() == "Player"
+    game.restart()
+
+    game.place(4)
+    game.place(5)
+    game.place(6)
+
+    assert game.check_row_win("X") == True
+    assert game.check_winner() == "Player"
+    game.restart()
+
+    game.place(1)
+    game.place(2)
+    game.place(3)
+
+    assert game.check_row_win("X") == True
+    assert game.check_winner() == "Player"
+
+
+def test_game_col_win():
+    game = TicTacToeGame()
+    game.place(7)
+    game.place(4)
+    game.place(1)
+
+    assert game.check_col_win("X") == True
+    assert game.check_winner() == "Player"
+    game.restart()
+
+    game.place(8)
+    game.place(5)
+    game.place(2)
+
+    assert game.check_col_win("X") == True
+    assert game.check_winner() == "Player"
+    game.restart()
+
+    game.place(9)
+    game.place(6)
+    game.place(3)
+
+    assert game.check_col_win("X") == True
+    assert game.check_winner() == "Player"
+
+
+def test_game_diag_win():
+    game = TicTacToeGame()
+    game.place(7)
+    game.place(5)
+    game.place(3)
+
+    assert game.check_diag_win("X") == True
+    assert game.check_winner() == "Player"
+    game.restart()
+
+    game.place(9)
+    game.place(5)
+    game.place(1)
+
+    assert game.check_diag_win("X") == True
+    assert game.check_winner() == "Player"
+
+
+def test_handle_game_end():
+    game = TicTacToeGame()
+    game.place(8)
+
+    with patch("builtins.input", return_value="y"):
+        handle_game_end(game)
+
+    assert game.board[8] == "-"
+
+    with pytest.raises(ValueError):
+        with patch("builtins.input", return_value="n"):
+            handle_game_end(game)
