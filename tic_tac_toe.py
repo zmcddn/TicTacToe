@@ -94,10 +94,12 @@ class TicTacToeGame(object):
 
         self.board[position] = "O"
 
-    def ai_move(self):
-        self.random_ai_move()
+        return position
 
-        print("AI moves:")
+    def ai_move(self):
+        position = self.random_ai_move()
+
+        print(f"AI moves to {position}:")
         self.steps += 1
         self.print_board()
 
