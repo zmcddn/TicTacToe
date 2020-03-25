@@ -17,14 +17,16 @@ A single player command line tic tac toe game to play with AI and kill some time
 
 ## How to play
 
-Run `python tic_tac_toe.py` and then follow instruction
+Run `python src/tic_tac_toe.py` and then follow instruction
 
 ## How to run tests and coverage
 
 Note the game is not 100% covered with tests.
 
-- Tests: `pytest tests`
-- Coverage: `pytest --cov=tic_tac_toe tests/`
+Run the following command in the root folder of the project:
+
+- Tests: `pytest`
+- Coverage: `pytest --cov=tic_tac_toe`
 
 
 If you like this project, please **give it a star** and  distribute it for more people to see.
