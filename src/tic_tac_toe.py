@@ -50,16 +50,22 @@ class TicTacToeGame(AIMoves):
 
         self.print_board()
 
-    def place(self, position):
+    @staticmethod
+    def check_position(position):
         try:
             # Convert user input to 1 <= position <= 9
             # Quit game if input is invalid
 
             position = int(position)
-            if position == 0:
+            if not 1 <= position <= 9:
                 raise TicTacToeException
         except ValueError:
             raise TicTacToeException
+
+        return position
+
+    def place(self, position):
+        position = self.check_position(position)
 
         has_valid_position = False
 

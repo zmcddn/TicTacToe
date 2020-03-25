@@ -15,6 +15,25 @@ def test_board_empty():
         assert game.board[key] == "-"
 
 
+def test_check_position():
+    game = TicTacToeGame()
+
+    with pytest.raises(TicTacToeException):
+        game.check_position(0)
+
+    with pytest.raises(TicTacToeException):
+        game.check_position(10)
+
+    with pytest.raises(TicTacToeException):
+        game.check_position(564)
+
+    with pytest.raises(TicTacToeException):
+        game.check_position("SA")
+
+    with pytest.raises(TicTacToeException):
+        game.check_position("=")
+
+
 def test_place_already_taken():
     game = TicTacToeGame()
     game.place(3)
