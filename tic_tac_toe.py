@@ -214,7 +214,7 @@ def start_game():
 def check_restart():
     while True:
         user_input = input()
-        print(user_input.upper())
+
         if user_input.upper() != "Y" and user_input.upper() != "N":
             print("Invalid input, please input either Y or N")
             continue
