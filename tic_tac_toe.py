@@ -1,11 +1,8 @@
-from random import randint
+from exceptions import TicTacToeException
+from ai_moves import AIMoves
 
 
-class TicTacToeException(Exception):
-    pass
-
-
-class TicTacToeGame:
+class TicTacToeGame(AIMoves):
     def __init__(self, *args, **kwargs):
         self.board = {
             1: "-",
@@ -82,30 +79,6 @@ class TicTacToeGame:
     def is_board_full(self):
         """Return True if board is full otherwise False"""
         return self.steps == 9
-
-    def random_ai_move(self):
-        """AI makes a random legal move"""
-
-        iteration = 0
-        position = 0
-        while iteration < 10:
-            _position = randint(1, 9)
-            if self.board[_position] == "-":
-                position = _position
-                break
-            else:
-                iteration += 1
-
-        if position == 0 and not self.is_board_full():
-            # Theoritically this should not happen
-            for key, value in self.board.items():
-                if value == "-":
-                    position = key
-                    break
-
-        self.board[position] = "O"
-
-        return position
 
     def ai_move(self):
         position = self.random_ai_move()
