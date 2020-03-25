@@ -1,7 +1,7 @@
 from random import randint
 
 
-class TicTacToeGame(object):
+class TicTacToeGame:
     def __init__(self, *args, **kwargs):
         self.board = {
             1: "-",
@@ -110,7 +110,7 @@ class TicTacToeGame(object):
         """Game is finished whenever there is a winner or board is full"""
 
         is_finished = True
-        winner = self.check_winner()
+        winner = self.check_winner(self.board)
 
         if winner == "AI":
             print("Sorry you lost, keep trying!")
@@ -124,69 +124,73 @@ class TicTacToeGame(object):
 
         return is_finished
 
-    def check_winner(self):
+    @classmethod
+    def check_winner(cls, board):
         if (
-            self.check_row_win("X")
-            or self.check_col_win("X")
-            or self.check_diag_win("X")
+            cls._check_row_win(board, "X")
+            or cls._check_col_win(board, "X")
+            or cls._check_diag_win(board, "X")
         ):
             return "Player"
         elif (
-            self.check_row_win("O")
-            or self.check_col_win("O")
-            or self.check_diag_win("O")
+            cls._check_row_win(board, "O")
+            or cls._check_col_win(board, "O")
+            or cls._check_diag_win(board, "O")
         ):
             return "AI"
         else:
             return None
 
-    def check_row_win(self, target):
+    @classmethod
+    def _check_row_win(cls, board, target):
         return (
             (
-                self.board[1] == target
-                and self.board[2] == target
-                and self.board[3] == target
+                board[1] == target
+                and board[2] == target
+                and board[3] == target
             )
             or (
-                self.board[4] == target
-                and self.board[5] == target
-                and self.board[6] == target
+                board[4] == target
+                and board[5] == target
+                and board[6] == target
             )
             or (
-                self.board[7] == target
-                and self.board[8] == target
-                and self.board[9] == target
+                board[7] == target
+                and board[8] == target
+                and board[9] == target
             )
         )
 
-    def check_col_win(self, target):
+    @classmethod
+    def _check_col_win(cls, board, target):
         return (
             (
-                self.board[1] == target
-                and self.board[4] == target
-                and self.board[7] == target
+                board[1] == target
+                and board[4] == target
+                and board[7] == target
             )
             or (
-                self.board[2] == target
-                and self.board[5] == target
-                and self.board[8] == target
+                board[2] == target
+                and board[5] == target
+                and board[8] == target
             )
             or (
-                self.board[3] == target
-                and self.board[6] == target
-                and self.board[9] == target
+                board[3] == target
+                and board[6] == target
+                and board[9] == target
             )
         )
 
-    def check_diag_win(self, target):
+    @classmethod
+    def _check_diag_win(cls, board, target):
         return (
-            self.board[1] == target
-            and self.board[5] == target
-            and self.board[9] == target
+            board[1] == target
+            and board[5] == target
+            and board[9] == target
         ) or (
-            self.board[3] == target
-            and self.board[5] == target
-            and self.board[7] == target
+            board[3] == target
+            and board[5] == target
+            and board[7] == target
         )
 
     def reset(self):
