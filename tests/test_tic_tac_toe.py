@@ -3,8 +3,9 @@ from unittest.mock import patch
 
 import pytest
 
-import tic_tac_toe
+import ai_moves
 from tic_tac_toe import TicTacToeGame, handle_game_end
+from exceptions import TicTacToeException
 
 
 def test_board_empty():
@@ -40,7 +41,7 @@ def test_is_board_full():
 
 def test_random_ai_move():
     game = TicTacToeGame()
-    with patch("tic_tac_toe.randint") as mock_random:
+    with patch("ai_moves.randint") as mock_random:
         mock_random.return_value = 5
         game.random_ai_move()
 
@@ -52,7 +53,7 @@ def test_random_ai_move():
 def test_draw():
     game = TicTacToeGame()
 
-    with patch("tic_tac_toe.randint") as mock_random:
+    with patch("ai_moves.randint") as mock_random:
         game.place(5)
         mock_random.return_value = 3
         game.ai_move()
@@ -78,7 +79,7 @@ def test_draw():
 def test_player_win__board_not_full():
     game = TicTacToeGame()
 
-    with patch("tic_tac_toe.randint") as mock_random:
+    with patch("ai_moves.randint") as mock_random:
         game.place(7)
         mock_random.return_value = 1
         game.ai_move()
@@ -96,7 +97,7 @@ def test_player_win__board_not_full():
 def test_ai_win__board_not_full():
     game = TicTacToeGame()
 
-    with patch("tic_tac_toe.randint") as mock_random:
+    with patch("ai_moves.randint") as mock_random:
         game.place(7)
         mock_random.return_value = 1
         game.ai_move()
@@ -117,7 +118,7 @@ def test_ai_win__board_not_full():
 def test_player_win__board_full():
     game = TicTacToeGame()
 
-    with patch("tic_tac_toe.randint") as mock_random:
+    with patch("ai_moves.randint") as mock_random:
         game.place(5)
         mock_random.return_value = 1
         game.ai_move()
@@ -168,24 +169,24 @@ def test_game_row_win():
     game.place(8)
     game.place(9)
 
-    assert game.check_row_win("X") == True
-    assert game.check_winner() == "Player"
+    assert game._check_row_win(game.board, "X") == True
+    assert game.check_winner(game.board) == "Player"
     game.restart()
 
     game.place(4)
     game.place(5)
     game.place(6)
 
-    assert game.check_row_win("X") == True
-    assert game.check_winner() == "Player"
+    assert game._check_row_win(game.board, "X") == True
+    assert game.check_winner(game.board) == "Player"
     game.restart()
 
     game.place(1)
     game.place(2)
     game.place(3)
 
-    assert game.check_row_win("X") == True
-    assert game.check_winner() == "Player"
+    assert game._check_row_win(game.board, "X") == True
+    assert game.check_winner(game.board) == "Player"
 
 
 def test_game_col_win():
@@ -194,24 +195,24 @@ def test_game_col_win():
     game.place(4)
     game.place(1)
 
-    assert game.check_col_win("X") == True
-    assert game.check_winner() == "Player"
+    assert game._check_col_win(game.board, "X") == True
+    assert game.check_winner(game.board) == "Player"
     game.restart()
 
     game.place(8)
     game.place(5)
     game.place(2)
 
-    assert game.check_col_win("X") == True
-    assert game.check_winner() == "Player"
+    assert game._check_col_win(game.board, "X") == True
+    assert game.check_winner(game.board) == "Player"
     game.restart()
 
     game.place(9)
     game.place(6)
     game.place(3)
 
-    assert game.check_col_win("X") == True
-    assert game.check_winner() == "Player"
+    assert game._check_col_win(game.board, "X") == True
+    assert game.check_winner(game.board) == "Player"
 
 
 def test_game_diag_win():
@@ -220,16 +221,16 @@ def test_game_diag_win():
     game.place(5)
     game.place(3)
 
-    assert game.check_diag_win("X") == True
-    assert game.check_winner() == "Player"
+    assert game._check_diag_win(game.board, "X") == True
+    assert game.check_winner(game.board) == "Player"
     game.restart()
 
     game.place(9)
     game.place(5)
     game.place(1)
 
-    assert game.check_diag_win("X") == True
-    assert game.check_winner() == "Player"
+    assert game._check_diag_win(game.board, "X") == True
+    assert game.check_winner(game.board) == "Player"
 
 
 def test_handle_game_end():
@@ -241,6 +242,6 @@ def test_handle_game_end():
 
     assert game.board[8] == "-"
 
-    with pytest.raises(ValueError):
+    with pytest.raises(TicTacToeException):
         with patch("builtins.input", return_value="n"):
             handle_game_end(game)
