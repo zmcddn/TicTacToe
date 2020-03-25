@@ -1,6 +1,10 @@
 from random import randint
 
 
+class TicTacToeException(Exception):
+    pass
+
+
 class TicTacToeGame:
     def __init__(self, *args, **kwargs):
         self.board = {
@@ -50,12 +54,19 @@ class TicTacToeGame:
         self.print_board()
 
     def place(self, position):
+        try:
+            # Convert user input to 1 <= position <= 9
+            # Quit game if input is invalid
+
+            position = int(position)
+            if position == 0:
+                raise TicTacToeException
+        except ValueError:
+            raise TicTacToeException
+
         has_valid_position = False
 
-        if not 1 <= position <= 9:
-            # This is handled for quitting the game
-            pass
-        elif self.board[position] != "-":
+        if self.board[position] != "-":
             print("Position already taken, please try again:")
         else:
             self.board[position] = "X"
@@ -211,7 +222,7 @@ def start_game():
         print("Your move (press any key other than 1~9 to quit):")
         position = input()
         try:
-            position_valid, _is_game_end = game.place(int(position))
+            position_valid, _is_game_end = game.place(position)
             if not position_valid:
                 continue
 
@@ -222,7 +233,7 @@ def start_game():
             if is_game_end:
                 handle_game_end(game)
             step += 1
-        except ValueError:
+        except TicTacToeException:
             print("\nThanks for playing, have a great day!\n")
             break
 
@@ -246,7 +257,7 @@ def handle_game_end(game):
         game.restart()
         step = 0
     else:
-        raise ValueError()
+        raise TicTacToeException
 
 
 if __name__ == "__main__":
